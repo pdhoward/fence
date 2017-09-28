@@ -15,7 +15,8 @@
   "author": "xio",
   "license": "MIT",
   "dependencies": {
-    "@turf/turf": "^4.3.1"
+    "@turf/turf": "^4.3.1",
+    "geolib": "2.0.23"
   }
 
 }
