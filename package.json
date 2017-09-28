@@ -1,0 +1,21 @@
+{
+  "name": "fence",
+  "version": "1.0.0",
+  "description": "Geofence functions specifically for the conversational economy",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "messaging",
+    "node",
+    "indoor mapping",
+    "ips",
+    "gis",
+    "geospatial"
+  ],
+  "author": "xio",
+  "license": "MIT",
+  "dependencies": {
+    "@turf/turf": "^4.3.1"
+  }
+
+}
