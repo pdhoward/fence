@@ -60,3 +60,16 @@ var isInLine2 = geolib.isPointInLine(point2, start, end) //-> true;
 var isInLine3 = geolib.isPointInLine(point3, start, end) //-> false;
 console.log("Is this in the line")
 console.log(isInLine1)
+
+////////
+console.log("TURF - Is this in the line")
+const line = turf.lineString([[1, 1], [1, 2], [1, 3], [1, 4]]);
+const point = turf.point([1, 2]);
+
+console.log(turf.booleanContains(line, point))
+console.log("TURF - Lines Cross")
+var line1 = turf.lineString([[-2, 2], [4, 2]]);
+var line2 = turf.lineString([[1, 1], [1, 2], [1, 3], [1, 4]]);
+
+var cross = turf.booleanCrosses(line1, line2);
+console.log(cross)
