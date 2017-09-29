@@ -46,3 +46,17 @@ console.log(geolib.getDistance(
     {latitude: "51° 31' N", longitude: "7° 28' E"},
     10, 3
 ))
+
+////////////////////
+
+var point1 = {latitude: 0.5, longitude: 0};
+var point2 = {latitude: 0, longitude: 10};
+var point3 = {latitude: 0, longitude: 15.5};
+var start  = {latitude: 0, longitude: 0};
+var end    = {latitude: 0, longitude: 15};
+
+var isInLine1 = geolib.isPointInLine(point1, start, end) //-> false;
+var isInLine2 = geolib.isPointInLine(point2, start, end) //-> true;
+var isInLine3 = geolib.isPointInLine(point3, start, end) //-> false;
+console.log("Is this in the line")
+console.log(isInLine1)
