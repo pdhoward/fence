@@ -38,3 +38,11 @@ console.log(geolib.isPointInCircle(
     {latitude: 51.5175, longitude: 7.4678},
     5000
   ))
+
+//   parm#3 is accuracy (digit to round to), parm#4 is precision 1 = meter, 2 decimeter, 3 centimeter
+console.log("distance calculated")
+console.log(geolib.getDistance(
+    {latitude: 51.5103, longitude: 7.49347},
+    {latitude: "51° 31' N", longitude: "7° 28' E"},
+    10, 3
+))
