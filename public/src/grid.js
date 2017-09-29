@@ -1,6 +1,22 @@
 
 // used in matrix.html
 
+// using d3 timer
+// https://stackoverflow.com/questions/14872687/how-to-rotate-an-object-around-the-center-in-d3-js
+// https://bl.ocks.org/mbostock/1353700
+// http://bl.ocks.org/djvanderlaan/4953593
+
+// deep snake https://github.com/gmamaladze/deep-snake
+// dispatching events https://bl.ocks.org/mbostock/5872848
+
+// dom to canvas https://bl.ocks.org/mbostock/1276463
+// ecommerce wheel http://saranyan.github.io/commerce_wheel/
+// d3 overall to google maps https://bl.ocks.org/mbostock/899711
+// mouseover https://bl.ocks.org/mbostock/1087001
+// periodic table nice mouseover http://tributary.io/inlet/4470504/
+// streaming traffic http://bl.ocks.org/WardCunningham/5861122
+// real time display of a time series https://bost.ocks.org/mike/path/
+
 function gridData() {
 	var data = new Array();
 	var xpos = 1; //starting xpos and ypos at 1 so the stroke will show when we make the grid below

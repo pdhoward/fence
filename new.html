@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>expansion of the US</title>
+<style>
+
+path {
+  fill: none;
+  stroke: #000;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+#chart {
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  width: 700px;
+}
+
+</style>
+
+  </head>
+
+  <body>
+
+    <div id="chart">
+
+      <div id="blahtext">
+      </div>
+
+    </div>
+
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+
+<script>
+//http://bl.ocks.org/bdilday/6acade5e35afa64f148d
+var vbose=0;
+var width = 800,
+    height = 600;
+var dx = 300;
+var dy = 100;
+var mnyear = 1787;
+var mxyear = 1975;
+var animateInterval = 300 // milliseconds
+var startOpacity = 0.00;
+var nyear = 8.0;
+
+/**
+var projection = d3.geo.orthographic()
+    .scale(500)
+    .translate([width / 2, height / 2])
+    .rotate([110, -30])
+    .clipAngle(90);
+**/
+
+
+var projection = d3.geo.stereographic()
+    .scale(800)
+    .translate([width / 2, height / 2])
+    .rotate([100, -40])
+    .clipAngle(90);
+
+
+/**
+var projection = d3.geo.mercator()
+    .center([120, 50 ])
+    .scale(200)
+    .rotate([-180,0]);
+
+**/
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var lam = d3.scale.linear()
+    .domain([0, width])
+    .range([-180, 180]);
+
+var psi = d3.scale.linear()
+    .domain([0, height])
+    .range([90, -90]);
+
+var g = svg.append("g");
+
+var lam = d3.scale.linear()
+    .domain([0, width])
+    .range([-180, 180]);
+
+var psi = d3.scale.linear()
+    .domain([0, height])
+    .range([90, -90]);
+
+d3.json("us_stateYear.json", function(error, us) {
+
+    if (error) return console.error(error);
+
+    if (vbose>=2) {
+	console.log(us);
+    }
+
+
+    g.selectAll("text")
+	.data([mnyear])
+	.enter()
+	.append("text")
+	.attr("x", 375)
+	.attr("y", 145)
+	.text(function(d) {
+	    console.log(["text", d]);
+	    return d;
+	})
+	.attr("font-family", "sans-serif")
+	.attr("font-size", "20px")
+        .attr("fill", "#555")
+    ;
+
+
+    var land = g.selectAll("path")
+	.data(topojson.feature(us, us.objects.us_40).features)
+	.enter()
+	.append("path")
+	.attr("class", "land")
+	.attr("d", path)
+        .style("fill", function(d) {
+	    console.log(["fill", d]);
+	    return d.properties["year"]<=mnyear ? "#555" : "#555";
+	})
+	.style("opacity", 0.0)
+    ;
+
+
+    g.append("path")
+	.datum(topojson.mesh(us, us.objects.us_40, function(a, b)
+			     {
+				 return a !== b;
+			     }
+			    ))
+	.attr("class", "border")
+	.attr("d", path)
+	.style("opacity", startOpacity);
+
+    var grid = d3.geo.graticule();
+    g.append("path")
+        .datum(d3.geo.graticule())
+        .attr("d", path)
+        .style("fill", "none")
+        .style("stroke", "#000000")
+        .style("stroke-width", "0.5px")
+	.style("opacity", 0.1);
+
+    var color = d3.scale.category20();
+    console.log(["color", color]);
+
+    var ic = 0;
+
+    setInterval(function () {
+	thisyear = ic + 1787
+	console.log(["ic", ic, thisyear]);
+	g.selectAll(".land")
+	    .transition()
+	    .duration(100)
+	    .style("opacity", function(d) {
+		var y = d.properties["year"];
+		var op = (y-thisyear)*(-1.0/nyear) + 1 ;
+		if (op>1) {
+		    op = 1;
+		}
+		if (op<startOpacity) {
+		    op=startOpacity;
+		}
+		return op;
+
+	    })
+
+
+	g.selectAll("text")
+	    .text(thisyear)
+	;
+
+	ic += 1;
+	ic = ic % (mxyear+1-mnyear);
+    }, animateInterval)
+
+
+
+})
+
+/**
+**/
+var zoom = d3.behavior.zoom()
+    .on("zoom",function() {
+        g.attr("transform",
+	       "translate(" +
+	       d3.event.translate.join(",") +
+	       ")scale(" +
+	       d3.event.scale+
+	       ")"
+	      );
+
+  });
+
+svg.call(zoom)
+
+</script>
+
+</body>
+
+</html>
+
+/*
+state,statename,year
+AK,Alaska,1959
+AL,Alabama,1819
+AR,Arkansas,1836
+AZ,Arizona,1912
+CA,California,1850
+CO,Colorado,1876
+CT,Connecticut,1788
+DE,Delaware,1787
+FL,Florida,1845
+GA,Georgia,1788
+HI,Hawaii,1959
+IA,Iowa,1846
+ID,Idaho,1890
+IL,Illinois,1818
+IN,Indiana,1816
+KS,Kansas,1861
+KY,Kentucky,1792
+LA,Louisiana,1812
+MA,Massachusetts,1788
+MD,Maryland,1788
+ME,Maine,1820
+MI,Michigan,1837
+MN,Minnesota,1858
+MO,Missouri,1821
+MS,Mississippi,1817
+MT,Montana,1889
+NC,North Carolina,1789
+ND,North Dakota,1889
+NE,Nebraska,1867
+NH,New Hampshire,1788
+NJ,New Jersey,1787
+NM,New Mexico,1912
+NV,Nevada,1864
+NY,New York,1788
+OH,Ohio,1803
+OK,Oklahoma,1907
+OR,Oregon,1859
+PA,Pennsylvania,1787
+RI,Rhode Island,1790
+SC,South Carolina,1788
+SD,South Dakota,1889
+TN,Tennessee,1796
+TX,Texas,1845
+UT,Utah,1896
+VA,Virginia,1788
+VT,Vermont,1791
+WA,Washington,1889
+WI,Wisconsin,1848
+WV,West Virginia,1863
+WY,Wyoming,1890
+*/
