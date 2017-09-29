@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        #floorSelector {
+            position: absolute;
+            top: 2em;
+            right: 2em;
+        }
+        .floor {
+            font-family: Helvetica, Arial, sans-serif;
+            padding: 0.7em 1em 0.7em 1em;
+            border: 1px solid #333;
+            cursor: pointer;
+            background-color: #fff;
+        }
+        .floor-2 {
+            border-bottom: none;
+            border-top-left-radius: 0.5em;
+            border-top-right-radius: 0.5em;
+        }
+        .floor-1 {
+            border-bottom-right-radius: 0.5em;
+            border-bottom-left-radius: 0.5em;
+        }
+        .clicked {
+            background-color: #555;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<div id='floorSelector'>
+    <div class='floor floor-2' data-floor='2'>2</div>
+    <div class='floor floor-1 clicked' data-floor='1'>1</div>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuc3dpY2siLCJhIjoiY2l1dTUzcmgxMDJ0djJ0b2VhY2sxNXBiMyJ9.25Qs4HNEkHubd4_Awbd8Og';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/danswick/cimcmpp8s00cu9lm19lfg2zqb', //stylesheet location
+    center: [-87.61694, 41.86625], // starting position
+    zoom: 17.2 // starting zoom
+});
+
+map.on('style.load', function () {
+    map.addLayer({
+        "id": "room-hover",
+        "type": "line",
+        "source": "composite",
+        "source-layer": "museumData",
+        "layout": {},
+        "paint": {
+            "line-color": "#ffffff",
+            "line-opacity": 0.6,
+            "line-width": 10,
+            "line-offset": 4.5
+        },
+        "filter": ["==", "name", ""]
+    });
+
+    // When the user moves their mouse over the page, we look for features
+    // at the mouse position (e.point) and within the museum layers.
+    // If a feature is found, then we'll update the filter in the room-hover
+    // layer to only show that room, thus making a hover effect.
+    map.on("mousemove", function(e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ["museum exhibits", "museum shops", "museum food court"] });
+        if (features.length) {
+            map.setFilter("room-hover", ["==", "name", features[0].properties.name]);
+        } else {
+            map.setFilter("room-hover", ["==", "name", ""]);
+        }
+    });
+
+    // When the user clicks, we look for the features at the click location (e.point)
+    // and within the museum layers. If a feature is found, then we calculate
+    // that features max and min latitude and longitude (feautreBoundaries())
+    // and fit the map to those boundaires (map.fitBounds()).
+    map.on("click", function(e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ["museum exhibits", "museum shops", "museum food court"] });
+
+        if (features.length) {
+            var clickedFeature = features[0].geometry;
+            var lonLatArr = splitLatLon(clickedFeature);
+            var featureBounds = featureBoundaries(lonLatArr[0], lonLatArr[1]);
+
+            map.fitBounds(featureBounds, {padding: 100});
+        }
+    });
+
+
+    // Given an array of latitudes and longitudes,
+    // find the max and min of each and return them
+    // in an array as per the fitBounds docs - https://www.mapbox.com/mapbox-gl-js/api/#Map.fitBounds
+    function featureBoundaries(lons, lats) {
+        var maxLat = Math.max(...lats),
+            minLat = Math.min(...lats),
+            maxLon = Math.max(...lons),
+            minLon = Math.min(...lons);
+
+        var bounds = [[minLon, minLat], [maxLon, maxLat]];
+        return bounds;
+    }
+
+    // Put all the lats and all the lons into respective arrays
+    function splitLatLon(feature) {
+        var longitudes = [];
+        var latitudes = [];
+
+        var featureCoords = feature.coordinates[0];
+
+        for (i = 0; i < featureCoords.length; i++) {
+            longitudes.push(featureCoords[i][0]);
+            latitudes.push(featureCoords[i][1]);
+        }
+
+        return [longitudes, latitudes];
+    }
+});
+
+function changeFloor(clickedFloor) {
+    var museumLayers = ["museum exhibits", "museum shops", "museum food court"];
+    museumLayers.forEach(function(layer, i){
+        var currentFilter = map.getFilter(layer);
+
+        if (currentFilter[2][1].length == 3) {
+            // if first time
+            var newFilter = ["all", currentFilter[2][1], ["==", "floor", clickedFloor]];
+        } else {
+            // if not first time
+            var newFilter = ["all", currentFilter[1], ["==", "floor", clickedFloor]];
+        }
+
+        map.setFilter(layer, newFilter);
+    });
+
+    map.setFilter("museum labels", ["all",
+            ["==", "$type", "Point"],
+            ["==", "floor", clickedFloor]
+        ]
+    );
+}
+
+var floorButtons = document.getElementById('floorSelector');
+
+floorButtons.onclick = function(e) {
+    if (!e.target.classList.contains('clicked')) {
+        var currentFloor = parseInt(e.target.getAttribute('data-floor'))
+        var floorEls = Array.prototype.slice.call(document.getElementsByClassName('floor'));
+
+        floorEls.forEach(function(el, i){
+            el.classList.toggle('clicked');
+        });
+
+        changeFloor(currentFloor);
+    }
+}
+
+</script>
+
+</body>
+</html>
