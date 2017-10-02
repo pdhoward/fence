@@ -1,7 +1,7 @@
 {
   "name": "fence",
   "version": "1.0.0",
-  "description": "Geofence functions specifically for the conversational economy",
+  "description": "geofence functions for the conversational economy",
   "main": "index.js",
   "scripts": {},
   "keywords": [
@@ -15,6 +15,11 @@
   "author": "xio",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "uuid": "3.1.0",
     "@turf/turf": "^4.3.1",
     "geolib": "2.0.23"
   }

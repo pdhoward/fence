@@ -20,11 +20,9 @@ app.use(cors())
 app.get('/', (req, res) => {
   const help = `
   <pre>
-    xio APIs test platform
+    xio geofence test platform
 
-    Use an Authorization header to work with your own data:
-    fetch(url, { headers: { 'Authorization': 'whatever-you-want' }})
-    Endpoints vary by dbstore being modeled. Check the code for details
+    Point your browser to the specific path to triegger a geofence use case
 
     &copy2016 xio all rights reserved
   </pre>
