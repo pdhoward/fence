@@ -8,6 +8,10 @@ const turf =      require('@turf/turf');
 const fs =        require('fs');
 const geolib =    require('geolib')
 
+// demo of calculations -- using turf and geolib -- for geofence
+// actions
+// to run -- node turf
+
 let randomPoints = fs.readFileSync('./input/random.geojson');
 
 randomPoints = JSON.parse(randomPoints);
