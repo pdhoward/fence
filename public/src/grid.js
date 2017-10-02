@@ -16,6 +16,7 @@
 // periodic table nice mouseover http://tributary.io/inlet/4470504/
 // streaming traffic http://bl.ocks.org/WardCunningham/5861122
 // real time display of a time series https://bost.ocks.org/mike/path/
+// real time bubble chart https://pubnub.github.io/d3-bubble/
 
 function gridData() {
 	var data = new Array();
