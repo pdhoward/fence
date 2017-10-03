@@ -52,13 +52,6 @@ app.use((req, res, next) => {
   }
 })
 
-// api modeling fetch of geojson data - simulating movement and geofencing
-/*
-// webpage
-app.get('/api/geo', (req, res) => {
-  res.sendFile(geoMap, { root: __dirname })
-})
-*/
 //config data - mapbox
 app.get('/api/geoconfig', bodyParser.json(), (req, res) => {
   res.send(api.getGeoConfig(req.token))
@@ -66,6 +59,11 @@ app.get('/api/geoconfig', bodyParser.json(), (req, res) => {
 // geojson
 app.get('/api/geopoints', bodyParser.json(), (req, res) => {
   res.send(api.getGeoData(req.token))
+})
+
+// read csv file with state data and return json
+app.get('/api/getstates', bodyParser.json(), (req, res) => {
+  res.send(api.getStates(req.token))
 })
 
 

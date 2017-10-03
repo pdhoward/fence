@@ -1,8 +1,18 @@
-// expansion of the USA
-// this needs to be refactored to read the file
-// at the endof thiis app from db json
-// ============
+
+
 //http://bl.ocks.org/bdilday/6acade5e35afa64f148d
+
+
+// Generate a unique token for accessing backend server.
+  let token = localStorage.token
+  if (!token)
+    token = localStorage.token = Math.random().toString(36).substr(-8)
+
+ const headers = {
+   'Authorization': token
+ }
+
+
 var vbose=0;
 var width = 800,
     height = 600;
@@ -63,9 +73,19 @@ var psi = d3.scale.linear()
     .domain([0, height])
     .range([90, -90]);
 
-d3.json("us_stateYear.json", function(error, us) {
+//////////////////////////////
+$.ajax({
+  url: "/api/getstates",
+  headers: headers,
+  method: "GET",})
+  .done(function(us) {
+    console.log("API CALL FINISHED")
+    console.log(us)
 
-    if (error) return console.error(error);
+///////////////////////
+//d3.json("us_stateYear.json", function(error, us) {
+
+//    if (error) return console.error(error);
 
     if (vbose>=2) {
 	console.log(us);
