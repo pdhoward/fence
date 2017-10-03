@@ -16,6 +16,8 @@ const app = express()
 app.use('/geo', express.static('public/geo'))
 app.use('/grid', express.static('public/grid'))
 app.use('/matrix', express.static('public/matrix'))
+app.use('/usa', express.static('public/usa'))
+
 app.use(cors())
 
 // help doc
