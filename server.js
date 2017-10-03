@@ -12,8 +12,10 @@ const api =         require('./api')
 
 const app = express()
 
-// serve map for location aware services tests
-app.use('/geo', express.static('public'))
+// static location aware services tests
+app.use('/geo', express.static('public/geo'))
+app.use('/grid', express.static('public/grid'))
+app.use('/matrix', express.static('public/matrix'))
 app.use(cors())
 
 // help doc
