@@ -77,13 +77,18 @@ var psi = d3.scale.linear()
 $.ajax({
   url: "/api/getstates",
   headers: headers,
-  method: "GET",})
+  type: "GET",
+  dataType: "json"})
   .done(function(us) {
     console.log("API CALL FINISHED")
-    console.log(us)
+    console.log(us)})
+  .fail(function(jqXHR, textStatus, errorThrown) {
+      // If fail
+    console.log(textStatus + ': ' + errorThrown);
+  });
 
 ///////////////////////
-//d3.json("us_stateYear.json", function(error, us) {
+d3.json("us_stateYear.json", function(error, us) {
 
 //    if (error) return console.error(error);
 

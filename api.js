@@ -12,6 +12,18 @@ const csv =       require('csvtojson')
 
 const statecsvfile='./db/states.csv'
 
+// convert the csv file on program initialization
+let arr = []
+csv({flatKeys:true})
+.fromFile(statecsvfile)
+.on('json',(data, indx)=>{
+    arr[indx] = data
+})
+.on('done',(error)=>{
+  if(error){console.log(error)}
+  console.log('CSV File Converted to JSON')
+})
+
 // unit test db stores
 const db = {}
 const geoDB = {}
@@ -45,18 +57,7 @@ const getGeoConfig = (token) => {
 ////////////////////////////////////
 
 const getStates = (token) => {
-  let arr = []
-  csv({flatKeys:true})
-  .fromFile(statecsvfile)
-  .on('json',(data, indx)=>{
-      arr[indx] = data
-  })
-  .on('done',(error)=>{
-    if(error){console.log(error)}
-    console.log('end')
-    console.log(arr)
     return arr
-  })
 }
 
 

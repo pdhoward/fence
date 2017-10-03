@@ -66,7 +66,6 @@ app.get('/api/getstates', bodyParser.json(), (req, res) => {
   res.send(api.getStates(req.token))
 })
 
-
 // spin up http server
 app.listen(config.port, () => {
   console.log('Server listening on port %s, Ctrl+C to stop', config.port)
