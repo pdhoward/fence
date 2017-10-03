@@ -13,7 +13,7 @@ const api =         require('./api')
 const app = express()
 
 const ioServer =    require('./app/stream').httpserver(app);
-
+const pub      =    require('./app/stream').pub
 // static location aware services tests
 app.use('/geo', express.static('public/geo'))
 app.use('/grid', express.static('public/grid'))
@@ -53,7 +53,8 @@ app.use((req, res, next) => {
     })
   }
 })
-
+pub.publish('geofence', 'More help needed. Our server is geofenced');
+pub.publish('indoormap', 'Big Alert - people swarming our campus');
 //config data - mapbox
 app.get('/api/geoconfig', bodyParser.json(), (req, res) => {
   res.send(api.getGeoConfig(req.token))
