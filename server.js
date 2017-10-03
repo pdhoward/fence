@@ -5,12 +5,15 @@
 //////////////////////////////////////////////////
 
 const express =     require('express')
+const stream =      require('../app/stream');
 const bodyParser =  require('body-parser')
 const cors =        require('cors')
 const config =      require('./db/config')
 const api =         require('./api')
 
 const app = express()
+
+const ioServer =    require('../app/stream')(app);
 
 // static location aware services tests
 app.use('/geo', express.static('public/geo'))
@@ -66,7 +69,7 @@ app.get('/api/getstates', bodyParser.json(), (req, res) => {
   res.send(api.getStates(req.token))
 })
 
-// spin up http server
-app.listen(config.port, () => {
+// spin up http server and redis connection
+ioServer.listen(config.port, () => {
   console.log('Server listening on port %s, Ctrl+C to stop', config.port)
 })
