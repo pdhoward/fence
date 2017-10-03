@@ -3,7 +3,7 @@
 ////////  stream data app component           ///////
 ///////         xio labs v 1.2.0            ///////
 //////////////////////////////////////////////////
-const config 	= 		require('../config');
+const config 	= 		require('../../db/config');
 const Redis =       require('ioredis');
 
 // config data for redis labs cloud service
@@ -16,14 +16,22 @@ let redis = new Redis({ port: port,
 let pub =   new Redis({ port: port,
                         host: host })
 
-exports.init = function(app) {
-	let server 	= 	require('http').Server(app);
+const emit = () => {
   // subscribe to redis
-  redis.subscribe('newMessage', function (err, count) {
-			console.log("Subscribed to " + count + " channel")
+  redis.subscribe('geofence', 'indoormap', function (err, count) {
+			console.log("Subscribed to " + count + " channels")
+      pub.publish('geofence', 'Notice - someone entered the fence');
+      pub.publish('indoormap', 'Alert - spotted someone in building');
     });
+
   redis.on('message', function (channel, message) {
        console.log('Received  ' + channel + ' message: ' + message);
      });
+}
+const httpserver = (app) => {
+	let server 	= 	require('http').Server(app);
+  emit()
 	return server;
 }
+
+module.exports = { httpserver, pub }

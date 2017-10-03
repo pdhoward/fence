@@ -5,7 +5,6 @@
 //////////////////////////////////////////////////
 
 const express =     require('express')
-const stream =      require('../app/stream');
 const bodyParser =  require('body-parser')
 const cors =        require('cors')
 const config =      require('./db/config')
@@ -13,7 +12,7 @@ const api =         require('./api')
 
 const app = express()
 
-const ioServer =    require('../app/stream')(app);
+const ioServer =    require('./app/stream').httpserver(app);
 
 // static location aware services tests
 app.use('/geo', express.static('public/geo'))
