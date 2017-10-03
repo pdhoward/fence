@@ -45,16 +45,17 @@ const getGeoConfig = (token) => {
 ////////////////////////////////////
 
 const getStates = (token) => {
-  csv()
+  let arr = []
+  csv({flatKeys:true})
   .fromFile(statecsvfile)
-  .on('json',(jsonObj)=>{
-      // combine csv header row and csv line to a json object
-      // jsonObj.a ==> 1 or 4
-      console.log(">>>>getstates<<<<")
-      console.log(jsonObj)
+  .on('json',(data, indx)=>{
+      arr[indx] = data
   })
   .on('done',(error)=>{
-      console.log('end')
+    if(error){console.log(error)}
+    console.log('end')
+    console.log(arr)
+    return arr
   })
 }
 
