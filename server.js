@@ -21,7 +21,7 @@ const pub      =    require('./app/stream').pub
 
 const chaoticRoute =     express.Router();
 
-require('../routes/chaoticpub')(chaoticRoute);
+require('./routes/chaoticpub')(chaoticRoute);
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////

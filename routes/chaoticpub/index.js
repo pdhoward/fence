@@ -8,9 +8,7 @@
 
 const bodyParser =    require('body-parser')
 const banter =        require('../../texts')
-const config =        require('../../config')
-
-const pub      =    require('./app/stream').pub
+const pub =           require('../../app/stream').pub
 
 // spoofing by publishing a text message every 2 seconds
 module.exports = function(router) {

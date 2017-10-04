@@ -17,7 +17,7 @@ let pub =   new Redis({ port: port,
                         host: host })
 const emit = () => {
   // subscribe to redis
-  redis.subscribe('geofence', 'indoormap', 'banter' function (err, count) {
+  redis.subscribe('geofence', 'indoormap', 'banter', function (err, count) {
 			console.log("Subscribed to " + count + " channels")
     });
 
