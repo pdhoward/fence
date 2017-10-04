@@ -15,13 +15,10 @@ let redis = new Redis({ port: port,
                         host: host });
 let pub =   new Redis({ port: port,
                         host: host })
-
 const emit = () => {
   // subscribe to redis
-  redis.subscribe('geofence', 'indoormap', function (err, count) {
+  redis.subscribe('geofence', 'indoormap', 'banter' function (err, count) {
 			console.log("Subscribed to " + count + " channels")
-      pub.publish('geofence', 'Notice - someone entered the fence');
-      pub.publish('indoormap', 'Alert - spotted someone in building');
     });
 
   redis.on('message', function (channel, message) {
