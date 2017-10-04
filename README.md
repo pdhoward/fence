@@ -18,6 +18,11 @@ Getting the app running on your local machine takes only a few steps:
 Point the browser at various end points to trigger data streaming
 see server.js for details
 
+An endpoint 'api/chaos' emits a continual stream of chatter to test 'interactions' with microservices (bots) on the microplex platform
+
+This same endpoint can be modified to emulate traffic, shipments or other objects that are being tracked. A message structure with geolocations and appropriate identifying info would be
+published. 
+
 ## License and Use
  [LICENSE](LICENSE.txt).
 
