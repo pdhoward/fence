@@ -1,7 +1,7 @@
 'use strict';
 /////////////////////////////////////////////////////
-////////  stream data app component           ///////
-///////         xio labs v 1.2.0            ///////
+////////       stream data for testing       ///////
+///////    configure redis and subscribe    ////////
 //////////////////////////////////////////////////
 const config 	= 		require('../../db/config');
 const Redis =       require('ioredis');
