@@ -9,6 +9,10 @@
 const bodyParser =    require('body-parser')
 const banter =        require('../../texts')
 const pub =           require('../../app/stream').pub
+const messages =      require('../../db/messageformat')
+const uuidv1 =        require('uuid/v1');
+
+let message = messages['twilio']
 
 // spoofing by publishing a text message periodically based on timer parameter
 module.exports = function(router) {
@@ -19,14 +23,28 @@ module.exports = function(router) {
 
         function stream() {
           var msgObj = banter[Math.floor(Math.random() * banter.length)];
-          var sendMsg = JSON.stringify(msgObj)
-          pub.publish('banter', sendMsg);
+          message.Body = msgObj.text
+          message.From = msgObj.name
+          message.ToCity = ""
+          message.FromZip - ""
+          message.smsSid = ""
+          message.FromState = ""
+          message.FromCity = ""
+          message.To = "webinar"
+          message.MessagingServiceSid = "",
+          message.ToZip = ""
+          message.MessageSid = uuidv1()
+          message.AcccountSid = ""
+          message.PostDate = Date.now()
+
+          var sendMsg = JSON.stringify(message)
+          pub.publish('banter', message);
         }
 
         function chaoticMessage() {
           setInterval(function() {
           stream()
-        }, 20000)};
+        }, 5000)};
 
         chaoticMessage()
 
