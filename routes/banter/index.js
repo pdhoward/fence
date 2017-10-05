@@ -23,6 +23,7 @@ module.exports = function(router) {
 
         function stream() {
           var msgObj = banter[Math.floor(Math.random() * banter.length)];
+          message._id = uuidv1()
           message.Body = msgObj.text
           message.From = msgObj.name
           message.ToCity = ""
