@@ -28,12 +28,12 @@ module.exports = function(router) {
           message.longitude = "spoof"
           message.xcoord = ""
           message.ycoord - ""
-          message.fenceId = ""
+          message.fenceId = "ChaoticBot"
           message.tagId = ""
           message.PostDate = Date.now()
 
           var sendMsg = JSON.stringify(message)
-          pub.publish('banter', sendMsg);
+          pub.publish('city', sendMsg);
         }
 
         function chaoticMessage() {
