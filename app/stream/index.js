@@ -21,9 +21,10 @@ const emit = () => {
 			console.log("Subscribed to " + count + " channels")
     });
 
-  redis.on('message', function (channel, message) {
-       console.log('Received  ' + channel + ' message: ' + message);
-     });
+//  redis.on('message', function (channel, message) {
+//       console.log('Received  ' + channel + ' message: ' + message);
+//     });
+
 }
 const httpserver = (app) => {
 	let server 	= 	require('http').Server(app);
