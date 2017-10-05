@@ -12,30 +12,24 @@ const pub =           require('../../app/stream').pub
 const messages =      require('../../db/messageformat')
 const uuidv1 =        require('uuid/v1');
 
-let message = messages['twilio']
+let message = messages['geotag']
 
 // spoofing by publishing a text message periodically based on timer parameter
 module.exports = function(router) {
     router.use(bodyParser.json());
       //evaluate a new message
       router.use(function(req, res, next) {
-        console.log('Stream Banter');
+        console.log('Stream City Locations');
 
         function stream() {
-          var msgObj = banter[Math.floor(Math.random() * banter.length)];
+        //  var msgObj = banter[Math.floor(Math.random() * banter.length)];
           message._id = uuidv1()
-          message.Body = msgObj.text
-          message.From = msgObj.name
-          message.ToCity = ""
-          message.FromZip = ""
-          message.smsSid = ""
-          message.FromState = ""
-          message.FromCity = ""
-          message.To = "webinar"
-          message.MessagingServiceSid = "",
-          message.ToZip = ""
-          message.MessageSid = uuidv1()
-          message.AcccountSid = ""
+          message.latitude = "spoof"
+          message.longitude = "spoof"
+          message.xcoord = ""
+          message.ycoord - ""
+          message.fenceId = ""
+          message.tagId = ""
           message.PostDate = Date.now()
 
           var sendMsg = JSON.stringify(message)
@@ -45,7 +39,7 @@ module.exports = function(router) {
         function chaoticMessage() {
           setInterval(function() {
           stream()
-        }, 5000)};
+        }, 3000)};
 
         chaoticMessage()
 

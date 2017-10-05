@@ -20,14 +20,17 @@ const pub      =    require('./app/stream').pub
 ////////////////////////////////////////////////////////////////////////
 
 const banterRoute =     express.Router();
+const cityRoute =       express.Router();
 
 require('./routes/banter')(banterRoute);
+require('./routes/city')(cityRoute);
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-app.use('/api/chaos', banterRoute)
+app.use('/msg/banter', banterRoute)
+app.use('/msg/city', cityRoute)
 
 // static location aware services tests
 app.use('/geo', express.static('public/geo'))
