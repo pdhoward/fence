@@ -10,7 +10,7 @@ const bodyParser =    require('body-parser')
 const banter =        require('../../texts')
 const pub =           require('../../app/stream').pub
 
-// spoofing by publishing a text message every 2 seconds
+// spoofing by publishing a text message periodically based on timer parameter
 module.exports = function(router) {
     router.use(bodyParser.json());
       //evaluate a new message
@@ -25,9 +25,8 @@ module.exports = function(router) {
 
         function chaoticMessage() {
           setInterval(function() {
-          console.log('publish');
           stream()
-         }, 2000)};
+        }, 20000)};
 
         chaoticMessage()
 
