@@ -19,15 +19,15 @@ const pub      =    require('./app/stream').pub
 /////////// Register and Spoofing Config Routes /////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-const chaoticRoute =     express.Router();
+const banterRoute =     express.Router();
 
-require('./routes/chaoticpub')(chaoticRoute);
+require('./routes/banter')(banterRoute);
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-app.use('/api/chaos', chaoticRoute)
+app.use('/api/chaos', banterRoute)
 
 // static location aware services tests
 app.use('/geo', express.static('public/geo'))
@@ -68,8 +68,11 @@ app.use((req, res, next) => {
     })
   }
 })
-pub.publish('geofence', 'More help needed. Our server is geofenced');
-pub.publish('indoormap', 'Big Alert - people swarming our campus');
+
+//////////////////////////////////////////////////////////////////////////
+/////////////////APIs render the Contents of DB Stores///////////////////
+////////////////////////////////////////////////////////////////////////
+
 //config data - mapbox
 app.get('/api/geoconfig', bodyParser.json(), (req, res) => {
   res.send(api.getGeoConfig(req.token))
