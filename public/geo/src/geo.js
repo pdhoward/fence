@@ -154,7 +154,7 @@ function d3Map(collection) {
     // and destination and adding them separately to
     // better style them. There is probably a better
     // way to do this!
-    var originANDdestination = [featuresdata[0], featuresdata[17]]
+    var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[17]]
 
     var begend = g.selectAll(".drinks")
         .data(originANDdestination)
