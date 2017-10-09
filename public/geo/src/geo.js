@@ -175,7 +175,11 @@ function d3Map(collection) {
         .attr("y", function(d) {
             return -10
         })
-
+    // DEBUG
+    console.log(">>>>>begend<<<<<<<<<")
+    console.log(begend)
+    console.log(">>>>>text<<<<<<<<<")
+    console.log(text)
 
     // when the user zooms in or out you need to reset
     // the view
