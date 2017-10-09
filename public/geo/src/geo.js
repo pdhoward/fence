@@ -150,11 +150,10 @@ function d3Map(collection) {
 
 
     // For simplicity I hard-coded this! I'm taking
-    // the first and the last object (the origin)
-    // and destination and adding them separately to
-    // better style them. There is probably a better
+    // the first and the last object (the origin, interim points and distination)
+    // and adding them separately to better style them. There is probably a better
     // way to do this!
-    var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[17]]
+    var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[12], featuresdata[17]]
 
     var begend = g.selectAll(".drinks")
         .data(originANDdestination)
