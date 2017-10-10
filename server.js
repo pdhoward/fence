@@ -21,10 +21,11 @@ const pub      =    require('./app/stream').pub
 
 const banterRoute =     express.Router();
 const cityRoute =       express.Router();
-
+const fenceRoute =      express.Router();
 // stream messages and publish to redis
 require('./routes/banter')(banterRoute);
 require('./routes/city')(cityRoute);
+require('./routes/fence')(fenceRoute);
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////

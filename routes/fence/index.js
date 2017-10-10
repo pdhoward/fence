@@ -7,7 +7,6 @@
 /////////////////////////////////////////////////////////
 
 const bodyParser =    require('body-parser')
-const banter =        require('../../texts')
 const pub =           require('../../app/stream').pub
 const messages =      require('../../db/messageformat')
 const uuidv1 =        require('uuid/v1');
@@ -21,7 +20,7 @@ module.exports = function(router) {
       router.use(function(req, res, next) {
         console.log('GeoFence Detected in City - Send Message');
 
-        function chaoticMessage() {        
+        function chaoticMessage() {
           console.log(req.body)
           //  var sendMsg = JSON.stringify(message)
           //  pub.publish('city', sendMsg);
