@@ -6,12 +6,26 @@
 
 
 // Generate a unique token for accessing backend server.
-  let token = localStorage.token
-  if (!token)
+let token = localStorage.token
+if (!token) {
     token = localStorage.token = Math.random().toString(36).substr(-8)
+  }
 
- const headers = {
+const headers = {
    'Authorization': token
+ }
+
+// set of variables used in the geofencing routine
+// geotag serves as a proxy for a wifi or gps tag, detectable by low power units
+// the geotag is registered to an individual, and enscribed with pertinent data on creation
+// additional data is appended when the tag is detected, and the message payload pub to redis
+
+ let geotag = {
+   "_id": "59822a4375dfef09ec9b6f14",
+   "_tagid": "123456",
+   "_vendorid": "654321"
+   "__v": 0,
+   "_created": new Date()
  }
 
 // set of variables which need to be initialized
@@ -175,11 +189,6 @@ function d3Map(collection) {
         .attr("y", function(d) {
             return -10
         })
-    // DEBUG
-    console.log(">>>>>begend<<<<<<<<<")
-    console.log(begend)
-    console.log(">>>>>text<<<<<<<<<")
-    console.log(text)
 
     // when the user zooms in or out you need to reset
     // the view
@@ -306,13 +315,6 @@ function d3Map(collection) {
 
             //Move the marker to that point
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
-            //console.log(interpolate(t))
-            console.log("point on line")
-            console.log(p)
-            console.log("fraction of time")
-            console.log(t)
-            console.log("line length")
-            console.log(l)
             return interpolate(t);
         }
     } //end tweenDash
@@ -329,13 +331,33 @@ function d3Map(collection) {
 };
 
 // similar to projectPoint this function converts lat/long to
-// svg coordinates except that it accepts a point from our
-// GeoJSON
+// svg coordinates except that it accepts a point from our GeoJSON
+// This is also the function used to detect an intersection with the geofence
+// which are identified in the geojson file
 
 function applyLatLngToLayer(d) {
     var y = d.geometry.coordinates[1]
     var x = d.geometry.coordinates[0]
+    console.log(">>>Geofence<<<<")
+    console.log(x)
+    console.log(y)
+    console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
     return map.latLngToLayerPoint(new L.LatLng(y, x))
 
 
+}
+// publishes a message to redis when the geofence is intersected
+function stream() {
+
+  message._id = uuidv1()
+  message.latitude = "spoof"
+  message.longitude = "spoof"
+  message.xcoord = ""
+  message.ycoord - ""
+  message.fenceId = "ChaoticBot"
+  message.tagId = ""
+  message.PostDate = Date.now()
+
+  var sendMsg = JSON.stringify(message)
+  pub.publish('city', sendMsg);
 }
