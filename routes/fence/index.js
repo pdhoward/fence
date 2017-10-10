@@ -21,7 +21,7 @@ module.exports = function(router) {
         console.log('GeoFence Detected in City - Send Message');
         chaoticMessage(req, (obj) => {
           res.send(obj)
-        }
+        })
         next()
     })
   }
