@@ -19,12 +19,12 @@ module.exports = function(router) {
       //evaluate a new message
       router.use(function(req, res, next) {
         console.log('GeoFence Detected in City - Send Message');
-        chaoticMessage()
+        chaoticMessage(req)
         next()
     })
   }
 
-function chaoticMessage() {
+function chaoticMessage(req) {
     console.log(req.body)
     console.log(req.token)
     //  var sendMsg = JSON.stringify(message)
