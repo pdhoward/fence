@@ -26,10 +26,10 @@ module.exports = function(router) {
     })
   }
 
-function chaoticMessage(req) {
+function chaoticMessage(req, cb) {
     console.log(req.body)
     console.log(req.token)
-    return {message: "success"}
+    return cb( {message: "success"} )
     //  var sendMsg = JSON.stringify(message)
     //  pub.publish('city', sendMsg);
 };
