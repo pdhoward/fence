@@ -27,6 +27,7 @@ module.exports = function(router) {
 function chaoticMessage(req) {
     console.log(req.body)
     console.log(req.token)
+    return {message: "success"}
     //  var sendMsg = JSON.stringify(message)
     //  pub.publish('city', sendMsg);
 };
