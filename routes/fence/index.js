@@ -22,6 +22,7 @@ module.exports = function(router) {
 
         function chaoticMessage() {
           console.log(req.body)
+          console.log(req.token)
           //  var sendMsg = JSON.stringify(message)
           //  pub.publish('city', sendMsg);
       };
@@ -30,4 +31,33 @@ module.exports = function(router) {
 
         next()
     })
+  }
+
+  //////////////////
+  // unit test db stores
+  const db = {}
+  const geoDB = {}
+
+  ///////////////////////////////////////////////////////
+  //////           verify test stores              /////
+  /////////////////////////////////////////////////////
+
+  const showpoints = () => {
+     return geopoints
+  }
+
+  ////////////////////////////////////
+  //////  geojson db functions //////
+  //////////////////////////////////
+  const getGeoData = (token) => {
+    let data = geoDB[token]
+    if (data == null) {
+      data = geoDB[token] = clone(geopoints)
+    }
+    return data
+  }
+
+  const getGeoConfig = (token) => {
+    let data = config.mapbox
+    return data
   }

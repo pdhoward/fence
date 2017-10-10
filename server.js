@@ -34,8 +34,12 @@ require('./routes/fence')(fenceRoute);
 app.use('/msg/banter', banterRoute)
 app.use('/msg/city', cityRoute)
 
-// static location aware services tests
+// device being tracked as it navigates city streets
+// message published when geofence is intersected by the device
 app.use('/geo', express.static('public/geo'))
+app.use('/geo/fence', fenceRoute)
+
+// static location aware services
 app.use('/grid', express.static('public/grid'))
 app.use('/matrix', express.static('public/matrix'))
 app.use('/usa', express.static('public/usa'))

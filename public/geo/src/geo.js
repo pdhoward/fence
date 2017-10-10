@@ -4,28 +4,13 @@
 ///////  test complex messaging & geofencing ///////
 //////////////////////////////////////////////////
 
-
 // Generate a unique token for accessing backend server.
 let token = localStorage.token
 if (!token) {
     token = localStorage.token = Math.random().toString(36).substr(-8)
   }
-
 const headers = {
    'Authorization': token
- }
-
-// set of variables used in the geofencing routine
-// geotag serves as a proxy for a wifi or gps tag, detectable by low power units
-// the geotag is registered to an individual, and enscribed with pertinent data on creation
-// additional data is appended when the tag is detected, and the message payload pub to redis
-
- let geotag = {
-   "_id": "59822a4375dfef09ec9b6f14",
-   "_tagid": "123456",
-   "_vendorid": "654321"
-   "__v": 0,
-   "_created": new Date()
  }
 
 // set of variables which need to be initialized
@@ -342,6 +327,7 @@ function applyLatLngToLayer(d) {
     console.log(x)
     console.log(y)
     console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
+    stream()
     return map.latLngToLayerPoint(new L.LatLng(y, x))
 
 
@@ -349,15 +335,29 @@ function applyLatLngToLayer(d) {
 // publishes a message to redis when the geofence is intersected
 function stream() {
 
-  message._id = uuidv1()
-  message.latitude = "spoof"
-  message.longitude = "spoof"
-  message.xcoord = ""
-  message.ycoord - ""
-  message.fenceId = "ChaoticBot"
-  message.tagId = ""
-  message.PostDate = Date.now()
+   // set of variables used in the geofencing routine
+   // geotag serves as a proxy for a wifi or gps tag, detectable by low power units
+   // the geotag is registered to an individual, and enscribed with pertinent data on creation
+   // additional data is appended when the tag is detected, and the message payload pub to redis
 
-  var sendMsg = JSON.stringify(message)
-  pub.publish('city', sendMsg);
+    let geotag = {
+      "_id": "59822a4375dfef09ec9b6f14",
+      "_tagid": "123456",
+      "_vendorid": "654321"
+      "__v": 0,
+      "_created": new Date()
+    }
+
+    return $.ajax({
+      url: "/api/geopoints",
+      headers: headers,
+      method: "GET",
+      success: function() {
+        console.log("GeoFence Message Published")
+        },
+      error: function() {
+        console.log("Error - GeoFence Message Not Published")
+        }
+    })
+
 }
