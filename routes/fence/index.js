@@ -21,7 +21,7 @@ module.exports = function(router) {
         console.log('GeoFence Detected in City - Send Message');
         console.log(req.body)
         console.log(req.token)
-        res.send({message: "success"})    
-        next()
+        res.send({message: "success"})
+      //  next()
     })
   }
