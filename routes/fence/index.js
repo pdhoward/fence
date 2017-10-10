@@ -19,17 +19,9 @@ module.exports = function(router) {
       //evaluate a new message
       router.use(function(req, res, next) {
         console.log('GeoFence Detected in City - Send Message');
-        chaoticMessage(req, (obj) => {
-          res.send(obj)
-        })
+        console.log(req.body)
+        console.log(req.token)
+        res.send({message: "success"})    
         next()
     })
   }
-
-function chaoticMessage(req, cb) {
-    console.log(req.body)
-    console.log(req.token)
-    return cb( {message: "success"} )
-    //  var sendMsg = JSON.stringify(message)
-    //  pub.publish('city', sendMsg);
-};
