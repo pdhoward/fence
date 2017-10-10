@@ -343,13 +343,13 @@ function stream() {
     let geotag = {
       "_id": "59822a4375dfef09ec9b6f14",
       "_tagid": "123456",
-      "_vendorid": "654321"
+      "_vendorid": "654321",
       "__v": 0,
       "_created": new Date()
     }
 
     return $.ajax({
-      url: "/api/geopoints",
+      url: "/geo/fence",
       headers: headers,
       method: "GET",
       success: function() {
