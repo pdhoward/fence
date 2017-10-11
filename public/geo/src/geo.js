@@ -299,6 +299,15 @@ function d3Map(collection) {
             var p = linePath.node().getPointAtLength(t * l);
 
             //Move the marker to that point
+            console.log("DEBUG<<<<<<<<<<<<<<<<<")
+            console.log(p)
+            console.log(interpolate(t))
+            // see below - need to access gps coordinates -- or create a function to return
+            // map coordinates based on gps ---
+            // need to intercept a map coordionate and comapre to gps of
+            // or capture the x y coordoinate of the geofence -- store it and then pull
+            // it out here to comppare
+            //console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
             return interpolate(t);
         }
