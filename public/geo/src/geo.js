@@ -92,8 +92,8 @@ function d3Map(collection) {
         point: projectPoint
     });
 
-    //d3.geo.path translates GeoJSON to SVG path codes.
-    //essentially a path generator. In this case it's
+    // d3.geo.path translates GeoJSON to SVG path codes.
+    // essentially a path generator. In this case it's
     // a path generator referencing our custom "projection"
     // which is the Leaflet method latLngToLayerPoint inside
     // our function called projectPoint
@@ -140,6 +140,9 @@ function d3Map(collection) {
         .append("path")
         .attr("class", "lineConnect");
 
+
+    // see testlab/d3transition project -- can add .on listeners
+    //    .on("mouseover", mouseover);
     // This will be our traveling circle it will
     // travel along our path
     var marker = g.append("circle")
@@ -168,11 +171,7 @@ function d3Map(collection) {
         .enter()
         .append("text")
         .text(function(d) {
-          console.log("MORE EXPLORATION")
-          console.log(d.properties.name)
-          console.log(originANDdestination)
-          
-            return d.properties.name
+          return d.properties.name
         })
         .attr("class", "locnames")
         .attr("y", function(d) {
@@ -233,14 +232,6 @@ function d3Map(collection) {
                 var y = featuresdata[0].geometry.coordinates[1]
                 var x = featuresdata[0].geometry.coordinates[0]
 
-                console.log(">>>>>DEEP EXPLORATION<<<<")
-                console.log(map.latLngToLayerPoint(new L.LatLng(y, x)).x)
-                console.log(map.latLngToLayerPoint(new L.LatLng(y, x)).y)
-                console.log(x + " " + y)
-                console.log(marker.attr("transform", "translate(" +
-                    map.latLngToLayerPoint(new L.LatLng(y, x)).x + "," +
-                    map.latLngToLayerPoint(new L.LatLng(y, x)).y + ")" ))
-
                 return "translate(" +
                     map.latLngToLayerPoint(new L.LatLng(y, x)).x + "," +
                     map.latLngToLayerPoint(new L.LatLng(y, x)).y + ")";
@@ -275,13 +266,14 @@ function d3Map(collection) {
 
     // NOTE - THis is the infinite loop -- keep replaying the transition
     function transition() {
-        linePath.transition()
+       linePath.transition()
             .duration(30000)
             .attrTween("stroke-dasharray", tweenDash)
             .each("end", function() {
-                d3.select(this).call(transition);// infinite loop
-            });
-    } //end transition
+              d3.select(this).call(transition);  // infinite loop
+            })
+          } //end transition
+
 
     // this function feeds the attrTween operator above with the
     // stroke and dash lengths
@@ -378,4 +370,21 @@ function stream() {
         }
     })
 
+}
+
+/////////////////mouseover test//////////////////////
+
+function mouseover(d) {
+  this.parentNode.appendChild(this);
+
+  d3.select(this)
+      .style("pointer-events", "none")
+    .transition()
+      .duration(750)
+      .attr("transform", "translate(480,480)scale(23)rotate(180)")
+    .transition()
+      .delay(1500)
+      .attr("transform", "translate(240,240)scale(0)")
+      .style("fill-opacity", 0)
+      .remove();
 }
