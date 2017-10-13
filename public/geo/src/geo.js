@@ -295,19 +295,12 @@ function d3Map(collection) {
 
             // p is the point on the line (coordinates) at a given length
             // along the line. In this case if l=50 and we're midway through
-            // the time then this would 25.
+            // the time then this would be 25.
             var p = linePath.node().getPointAtLength(t * l);
 
             //Move the marker to that point
-            console.log("DEBUG<<<<<<<<<<<<<<<<<")
-            console.log(p)
+            console.log(">>>INTERPOLATE<<<<")
             console.log(interpolate(t))
-            // see below - need to access gps coordinates -- or create a function to return
-            // map coordinates based on gps ---
-            // need to intercept a map coordionate and comapre to gps of
-            // or capture the x y coordoinate of the geofence -- store it and then pull
-            // it out here to comppare
-            //console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
             return interpolate(t);
         }
@@ -318,6 +311,9 @@ function d3Map(collection) {
     //Returns the map layer point that corresponds to the given geographical
     // coordinates (useful for placing overlays on the map).
     function projectPoint(x, y) {
+      console.log(">>>Map Layer Point to GPS<<<<")
+      console.log(x + " + " + y)
+      console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
         var point = map.latLngToLayerPoint(new L.LatLng(y, x));
         this.stream.point(point.x, point.y);
     } //end projectPoint
@@ -332,10 +328,10 @@ function d3Map(collection) {
 function applyLatLngToLayer(d) {
     var y = d.geometry.coordinates[1]
     var x = d.geometry.coordinates[0]
-    console.log(">>>Geofence<<<<")
-    console.log(x)
-    console.log(y)
-    console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
+  //  console.log(">>>Geofence<<<<")
+  //  console.log(x)
+  //  console.log(y)
+  //  console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
     stream()
     return map.latLngToLayerPoint(new L.LatLng(y, x))
 
