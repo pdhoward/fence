@@ -228,6 +228,11 @@ function d3Map(collection) {
             function() {
                 var y = featuresdata[0].geometry.coordinates[1]
                 var x = featuresdata[0].geometry.coordinates[0]
+
+                console.log(">>>>>DEEP EXPLORATION<<<<")
+                console.log(map.latLngToLayerPoint(new L.LatLng(y, x)).x)
+                console.log(map.latLngToLayerPoint(new L.LatLng(y, x)).y)
+
                 return "translate(" +
                     map.latLngToLayerPoint(new L.LatLng(y, x)).x + "," +
                     map.latLngToLayerPoint(new L.LatLng(y, x)).y + ")";
@@ -308,12 +313,12 @@ function d3Map(collection) {
 
     // Use Leaflet to implement a D3 geometric transformation.
     // the latLngToLayerPoint is a Leaflet conversion method:
-    //Returns the map layer point that corresponds to the given geographical
+    // Returns the map layer point that corresponds to the given geographical
     // coordinates (useful for placing overlays on the map).
     function projectPoint(x, y) {
-      console.log(">>>Map Layer Point to GPS<<<<")
-      console.log(x + " + " + y)
-      console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
+  //    console.log(">>>Map Layer Point to GPS<<<<")
+  //    console.log(x + " + " + y)
+  //    console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
         var point = map.latLngToLayerPoint(new L.LatLng(y, x));
         this.stream.point(point.x, point.y);
     } //end projectPoint
@@ -332,7 +337,7 @@ function applyLatLngToLayer(d) {
   //  console.log(x)
   //  console.log(y)
   //  console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
-    stream()
+  //  stream()
     return map.latLngToLayerPoint(new L.LatLng(y, x))
 
 
