@@ -168,6 +168,10 @@ function d3Map(collection) {
         .enter()
         .append("text")
         .text(function(d) {
+          console.log("MORE EXPLORATION")
+          console.log(d.properties.name)
+          console.log(originANDdestination)
+          
             return d.properties.name
         })
         .attr("class", "locnames")
@@ -232,6 +236,10 @@ function d3Map(collection) {
                 console.log(">>>>>DEEP EXPLORATION<<<<")
                 console.log(map.latLngToLayerPoint(new L.LatLng(y, x)).x)
                 console.log(map.latLngToLayerPoint(new L.LatLng(y, x)).y)
+                console.log(x + " " + y)
+                console.log(marker.attr("transform", "translate(" +
+                    map.latLngToLayerPoint(new L.LatLng(y, x)).x + "," +
+                    map.latLngToLayerPoint(new L.LatLng(y, x)).y + ")" ))
 
                 return "translate(" +
                     map.latLngToLayerPoint(new L.LatLng(y, x)).x + "," +
@@ -304,8 +312,8 @@ function d3Map(collection) {
             var p = linePath.node().getPointAtLength(t * l);
 
             //Move the marker to that point
-            console.log(">>>INTERPOLATE<<<<")
-            console.log(interpolate(t))
+          //  console.log(">>>INTERPOLATE<<<<")
+          //  console.log(interpolate(t))
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
             return interpolate(t);
         }
