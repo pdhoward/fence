@@ -269,6 +269,9 @@ function d3Map(collection) {
        linePath.transition()
             .duration(30000)
             .attrTween("stroke-dasharray", tweenDash)
+            .each((item) =>{
+              console.log(item)
+            })
             .each("end", function() {
               d3.select(this).call(transition);  // infinite loop
             })
