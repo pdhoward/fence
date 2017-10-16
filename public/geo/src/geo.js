@@ -138,6 +138,7 @@ function d3Map(collection) {
         .data([featuresdata])
         .enter()
         .append("path")
+        .attr("id", "way")
         .attr("class", "lineConnect");
 
 
@@ -156,6 +157,8 @@ function d3Map(collection) {
     // and adding them separately to better style them. There is probably a better
     // way to do this!
     var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[12], featuresdata[17]]
+
+    let counter = 0
 
     var begend = g.selectAll(".drinks")
         .data(originANDdestination)
@@ -188,6 +191,9 @@ function d3Map(collection) {
 
     // Reposition the SVG to cover the features.
     function reset() {
+
+       counter = 0
+
         var bounds = d3path.bounds(collection),
             topLeft = bounds[0],
             bottomRight = bounds[1];
@@ -266,12 +272,10 @@ function d3Map(collection) {
 
     // NOTE - THis is the infinite loop -- keep replaying the transition
     function transition() {
+
        linePath.transition()
             .duration(30000)
             .attrTween("stroke-dasharray", tweenDash)
-            .each((item) =>{
-              console.log(item)
-            })
             .each("end", function() {
               d3.select(this).call(transition);  // infinite loop
             })
@@ -284,6 +288,15 @@ function d3Map(collection) {
         return function(t) {
             //total length of path (single value)
             var l = linePath.node().getTotalLength();
+
+            var beg, book, bot, stop
+
+      //      let arr = linePath.map((d) => {
+      //        console.log(d)
+      //        return d
+      //      })
+      //      console.log(arr)
+
 
             // this is creating a function called interpolate which takes
             // as input a single value 0-1. The function will interpolate
@@ -300,7 +313,8 @@ function d3Map(collection) {
             interpolate = d3.interpolateString("0," + l, l + "," + l);
             //t is fraction of time 0-1 since transition began
             var marker = d3.select("#marker");
-
+            var way = d3.select("#way")
+            var milemarker = d3.select("#marker").transform
             // p is the point on the line (coordinates) at a given length
             // along the line. In this case if l=50 and we're midway through
             // the time then this would be 25.
@@ -309,7 +323,27 @@ function d3Map(collection) {
             //Move the marker to that point
           //  console.log(">>>INTERPOLATE<<<<")
           //  console.log(interpolate(t))
+            //console.log(linePath.node())
+            //console.log(linePath.data())
+            //console.log(linePath.datum())
+          //  console.log(interpolate(t))
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
+
+            counter++
+            if (counter < 4) {
+              console.log(marker)
+              console.log(way)
+              console.log(milemarker)
+            linePath.each(function(d) {
+              d.totalLength = this.getTotalLength()
+              d.p = p
+              d.i = interpolate(t);
+              d.marker = marker.attr("transform", "translate(" + p.x + "," + p.y + ")")
+              console.log(d)
+            })
+            console.log(begend)
+          }
+
             return interpolate(t);
         }
     } //end tweenDash
