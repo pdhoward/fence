@@ -113,6 +113,22 @@ function d3Map(collection) {
             return applyLatLngToLayer(d).y
         });
 
+    var toSub = d3.svg.line()
+        .interpolate("linear")
+          .x(function(d) {
+              return applyLatLngToLayer(d).x
+          })
+          .y(function(d) {
+              return applyLatLngToLayer(d).y
+        });
+    var toBook = d3.svg.line()
+        .interpolate("linear")
+         .x(function(d) {
+              return applyLatLngToLayer(d).x
+            })
+         .y(function(d) {
+                return applyLatLngToLayer(d).y
+        });
 
     // From now on we are essentially appending our features to the
     // group element. We're adding a class with the line name
@@ -160,36 +176,29 @@ function d3Map(collection) {
     // i am creating interim paths one ach length will be calcuated in linepath transition
     var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[12], featuresdata[17]]
 
-    let subwaydata = featuresdata.map((item, i) => { if (i == 0) return item })
-    let bookstoredata = featuresdata.map((item, i) => { if (i < 9) return item })
-    let botstoredata = featuresdata.map((item, i) => { if (i < 13) return item })
-    let officedata = featuresdata.map((item, i) => { return item })
+    let subwaydata = featuresdata.filter((item, i) => { if (i == 0) return item })
+    let bookstoredata = featuresdata.filter((item, i) => { if (i < 9) return item })
+    let botstoredata = featuresdata.filter((item, i) => { if (i < 13) return item })
+    let officedata = featuresdata.filter((item, i) => { return item })
 
     var subwayPath = g.selectAll(".subConnect")
         .data([subwaydata])
         .enter()
         .append("path")
-        .attr("id", "way")
+        .attr("id", "sub")
         .attr("class", "subConnect");
-    var sub = subwayPath.node().getTotalLength();
-    console.log('subwaypath length')
-    console.log(sub)
+
 
     var bkstorePath = g.selectAll(".bkConnect")
         .data([bookstoredata])
         .enter()
         .append("path")
-        .attr("id", "way")
+        .attr("id", "bk")
         .attr("class", "bkConnect");
-    var bk = bkstorePath.node().getTotalLength();
-    console.log('bookpath length')
-    console.log(bk)
-
-    var tst= linePath.node().getTotalLength();
-    console.log('total length')
-    console.log(tst)
 
     /////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+
     var begend = g.selectAll(".drinks")
         .data(originANDdestination)
         .enter()
@@ -222,8 +231,6 @@ function d3Map(collection) {
 
     // Reposition the SVG to cover the features.
     function reset() {
-
-       counter = 0
 
         var bounds = d3path.bounds(collection),
             topLeft = bounds[0],
@@ -282,9 +289,10 @@ function d3Map(collection) {
             .style("top", topLeft[1] - 50 + "px");
 
 
-        // linePath.attr("d", d3path);
+        bkstorePath.attr("d", toLine)
+        subwayPath.attr("d", toLine)
         linePath.attr("d", toLine)
-        // ptPath.attr("d", d3path);
+
         g.attr("transform", "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")");
 
     } // end reset
@@ -319,6 +327,18 @@ function d3Map(collection) {
         return function(t) {
             //total length of path (single value)
             var l = linePath.node().getTotalLength();
+
+            var sub = subwayPath.node().getTotalLength();
+            console.log('subwaypath length')
+            console.log(subwayPath.node())
+            console.log(sub)
+
+            var bk = bkstorePath.node().getTotalLength();
+            console.log('bookpath length')
+            console.log(bkstorePath.node())
+            console.log(bk)
+
+
 
             // this is creating a function called interpolate which takes
             // as input a single value 0-1. The function will interpolate
@@ -358,13 +378,9 @@ function d3Map(collection) {
     // Returns the map layer point that corresponds to the given geographical
     // coordinates (useful for placing overlays on the map).
     function projectPoint(x, y) {
-  //    console.log(">>>Map Layer Point to GPS<<<<")
-  //    console.log(x + " + " + y)
-  //    console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
         var point = map.latLngToLayerPoint(new L.LatLng(y, x));
         this.stream.point(point.x, point.y);
     } //end projectPoint
-//    });
 };
 
 // similar to projectPoint this function converts lat/long to
@@ -375,15 +391,10 @@ function d3Map(collection) {
 function applyLatLngToLayer(d) {
     var y = d.geometry.coordinates[1]
     var x = d.geometry.coordinates[0]
-  //  console.log(">>>Geofence<<<<")
-  //  console.log(x)
-  //  console.log(y)
-  //  console.log(map.latLngToLayerPoint(new L.LatLng(y, x)))
-  //  stream()
     return map.latLngToLayerPoint(new L.LatLng(y, x))
-
-
 }
+
+////////////////////////////////////////////////////////////////////////
 // publishes a message to redis when the geofence is intersected
 function stream() {
 
