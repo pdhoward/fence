@@ -165,6 +165,7 @@ function d3Map(collection) {
         .enter()
         .append("circle", ".drinks")
         .attr("r", 5)
+        .attr("id", "geofence")
         .style("fill", "red")
         .style("opacity", "1");
 
@@ -289,15 +290,6 @@ function d3Map(collection) {
             //total length of path (single value)
             var l = linePath.node().getTotalLength();
 
-            var beg, book, bot, stop
-
-      //      let arr = linePath.map((d) => {
-      //        console.log(d)
-      //        return d
-      //      })
-      //      console.log(arr)
-
-
             // this is creating a function called interpolate which takes
             // as input a single value 0-1. The function will interpolate
             // between the numbers embedded in a string. An example might
@@ -313,8 +305,7 @@ function d3Map(collection) {
             interpolate = d3.interpolateString("0," + l, l + "," + l);
             //t is fraction of time 0-1 since transition began
             var marker = d3.select("#marker");
-            var way = d3.select("#way")
-            var milemarker = d3.select("#marker").transform
+
             // p is the point on the line (coordinates) at a given length
             // along the line. In this case if l=50 and we're midway through
             // the time then this would be 25.
@@ -331,17 +322,28 @@ function d3Map(collection) {
 
             counter++
             if (counter < 4) {
+              console.log("MARKER")
               console.log(marker)
-              console.log(way)
-              console.log(milemarker)
+              console.log("WAY")
+              console.log(d3.select("#way").attr("stroke-dasharray"))
             linePath.each(function(d) {
               d.totalLength = this.getTotalLength()
               d.p = p
               d.i = interpolate(t);
               d.marker = marker.attr("transform", "translate(" + p.x + "," + p.y + ")")
+              console.log("LINEPATH")
               console.log(d)
             })
+            console.log("4 Places along the way")
             console.log(begend)
+            d3.selectAll("#geofence").each( function(d, i){
+                console.log("Iterate each place")
+                console.log( d3.select(this).attr("transform") );
+                console.log(d)
+                console.log(i)
+
+            })
+
           }
 
             return interpolate(t);
