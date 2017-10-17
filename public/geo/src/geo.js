@@ -153,13 +153,43 @@ function d3Map(collection) {
 
 
     // For simplicity I hard-coded this! I'm taking
-    // the first and the last object (the origin, interim points and distination)
+    // a set of objects (the origin, interim points and distination)
     // and adding them separately to better style them. There is probably a better
     // way to do this!
+    // also - in order to calculate the paths to each interim point, ad set up a geofence
+    // i am creating interim paths one ach length will be calcuated in linepath transition
     var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[12], featuresdata[17]]
 
-    let counter = 0
+    let subwaydata = featuresdata.map((item, i) => { if (i == 0) return item })
+    let bookstoredata = featuresdata.map((item, i) => { if (i < 9) return item })
+    let botstoredata = featuresdata.map((item, i) => { if (i < 13) return item })
+    let officedata = featuresdata.map((item, i) => { return item })
 
+    var subwayPath = g.selectAll(".subConnect")
+        .data([subwaydata])
+        .enter()
+        .append("path")
+        .attr("id", "way")
+        .attr("class", "subConnect");
+    var sub = subwayPath.node().getTotalLength();
+    console.log('subwaypath length')
+    console.log(sub)
+
+    var bkstorePath = g.selectAll(".bkConnect")
+        .data([bookstoredata])
+        .enter()
+        .append("path")
+        .attr("id", "way")
+        .attr("class", "bkConnect");
+    var bk = bkstorePath.node().getTotalLength();
+    console.log('bookpath length')
+    console.log(bk)
+
+    var tst= linePath.node().getTotalLength();
+    console.log('total length')
+    console.log(tst)
+
+    /////////////////////////////////////////////////////////////////////////////
     var begend = g.selectAll(".drinks")
         .data(originANDdestination)
         .enter()
@@ -312,41 +342,14 @@ function d3Map(collection) {
             var p = linePath.node().getPointAtLength(t * l);
 
             //Move the marker to that point
-          //  console.log(">>>INTERPOLATE<<<<")
-          //  console.log(interpolate(t))
-            //console.log(linePath.node())
-            //console.log(linePath.data())
-            //console.log(linePath.datum())
-          //  console.log(interpolate(t))
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
 
-            counter++
-            if (counter < 4) {
-              console.log("MARKER")
-              console.log(marker)
-              console.log("WAY")
-              console.log(d3.select("#way").attr("stroke-dasharray"))
-            linePath.each(function(d) {
-              d.totalLength = this.getTotalLength()
-              d.p = p
-              d.i = interpolate(t);
-              d.marker = marker.attr("transform", "translate(" + p.x + "," + p.y + ")")
-              console.log("LINEPATH")
-              console.log(d)
-            })
-            console.log("4 Places along the way")
-            console.log(begend)
-            d3.selectAll("#geofence").each( function(d, i){
-                console.log("Iterate each place")
-                console.log( d3.select(this).attr("transform") );
-                console.log(d)
-                console.log(i)
-
-            })
-
-          }
+          //  console.log(d3.select("#way").attr("stroke-dasharray"))
+      //      console.log("INTERPOLATE")
+      //      console.log(interpolate(t))
 
             return interpolate(t);
+
         }
     } //end tweenDash
 
