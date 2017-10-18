@@ -344,11 +344,12 @@ function d3Map(collection) {
              console.log(calc)
              console.log(e)
              console.log(result)
+             console.log("=========================")
 
-             if (calc < .0005) {
-               if (state[i]) {
+             if (calc < .05) {
+               if (state[i] === true) {
                  state[i] = false
-                 console.log(state)
+                 console.log(state[i])
                  console.log(i)
                  stream(fence[i])
                  return
