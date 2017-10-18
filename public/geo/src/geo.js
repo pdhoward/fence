@@ -289,8 +289,8 @@ function d3Map(collection) {
             .style("top", topLeft[1] - 50 + "px");
 
 
-        bkstorePath.attr("d", toLine)
-        subwayPath.attr("d", toLine)
+        bkstorePath.attr("d", toBook)
+        subwayPath.attr("d", toSub)
         linePath.attr("d", toLine)
 
         g.attr("transform", "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")");
