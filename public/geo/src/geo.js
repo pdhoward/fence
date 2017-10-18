@@ -111,7 +111,7 @@ function d3Map(collection) {
         })
         .y(function(d) {
             return applyLatLngToLayer(d).y
-        });  
+        });
 
     // From now on we are essentially appending our features to the
     // group element. We're adding a class with the line name
@@ -324,9 +324,14 @@ function d3Map(collection) {
             //Move the marker to that point
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
 
-          //  console.log(d3.select("#way").attr("stroke-dasharray"))
-      //      console.log("INTERPOLATE")
-      //      console.log(interpolate(t))
+          console.log(d3.select("#way").attr("stroke-dasharray"))
+    
+           let pnt = interpolate(t)
+           var arr = pnt.split(",");
+           var arg1 = parseInt(arr[0], 10)
+           var arg2 = parseInt(arr[1], 10)
+           var result = arg1/arg2
+           console.log(result)
 
             return interpolate(t);
 
