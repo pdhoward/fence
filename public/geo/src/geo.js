@@ -284,7 +284,7 @@ function d3Map(collection) {
     function transition() {
 
        linePath.transition()
-            .duration(30000)
+            .duration(90000)
             .attrTween("stroke-dasharray", tweenDash)
             .each("end", function() {
               d3.select(this).call(transition);  // infinite loop
@@ -324,15 +324,42 @@ function d3Map(collection) {
             //Move the marker to that point
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
 
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////  geofence spoof ///////////////////////////////////
             //console.log(d3.select("#way").attr("stroke-dasharray"))
+            // the fence represent the 4 relative positions of the geofences on the path
+            let fence = [.30, .65]
+            let state =  [true, true]
 
            let pnt = interpolate(t)
-           var arr = pnt.split(",");
-           var arg1 = parseInt(arr[0], 10)
-           var arg2 = parseInt(arr[1], 10)
-           var result = arg1/arg2
-           console.log(result)
+           let arr = pnt.split(",");
+           let arg1 = parseInt(arr[0], 10)
+           let arg2 = parseInt(arr[1], 10)
+           let result = arg1/arg2
+           console.log("============")
 
+           fence.forEach((e, i) =>{
+             let calc = Math.abs(e-result)
+             console.log(calc)
+
+             if (calc < .0005) {
+               if (state[i]) {
+                 state[i] = false
+                 console.log(state)
+                 console.log(i)
+                 stream(fence[i])
+                 return
+               }
+             }
+             if (i == 1) {
+               console.log("detected office")
+               state[0] = true
+               state[1] = true
+             }
+           })
+
+///////////////////////////////////////////////////////////////////////////
             return interpolate(t);
 
         }
@@ -361,12 +388,13 @@ function applyLatLngToLayer(d) {
 
 ////////////////////////////////////////////////////////////////////////
 // publishes a message to redis when the geofence is intersected
-function stream() {
+function stream(i) {
 
    // set of variables used in the geofencing routine
    // geotag serves as a proxy for a wifi or gps tag, detectable by low power units
    // the geotag is registered to an individual, and enscribed with pertinent data on creation
    // additional data is appended when the tag is detected, and the message payload pub to redis
+   console.log("Detected this geofence >> " + i)
 
     let geotag = {
       "_id": "59822a4375dfef09ec9b6f14",
