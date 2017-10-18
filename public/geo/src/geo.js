@@ -341,21 +341,23 @@ function d3Map(collection) {
 
            fence.forEach((e, i) =>{
              let calc = Math.abs(e-result)
-             console.log(calc)
-             console.log(e)
-             console.log(result)
+            console.log("marker is at " + result)
+            console.log("fence is at " + e)
+            console.log("Distance fence to marker = " + calc)
+
              console.log("=========================")
 
              if (calc < .05) {
+               console.log("The state of fence is " + state[i])
                if (state[i] === true) {
                  state[i] = false
-                 console.log(state[i])
+                 console.log(">> Changed state of fence to " + state[i])
                  console.log(i)
-                 stream(fence[i])
-                 return
+                 stream(fence[i])                 
                }
              }
-             if (i == 1) {
+             // reset the state when the market has traveled beyond the 2nd geofence
+             if (result > .8) {
                state[0] = true
                state[1] = true
              }
