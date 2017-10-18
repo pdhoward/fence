@@ -17,6 +17,11 @@ const headers = {
 // the initialization is done inside of 'when function' in order to control async behavior
 // the mapbox api token needs to be retrieved before the remaining variables are set
 
+//used in geofence spoof in tweenDash function
+let fence = [.30, .65]
+let state =  [true, true]
+/////////
+
 let mapboxToken
 let mapboxTiles
 let map
@@ -328,32 +333,21 @@ function d3Map(collection) {
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////  geofence spoof ///////////////////////////////////
             //console.log(d3.select("#way").attr("stroke-dasharray"))
-            // the fence represent the 4 relative positions of the geofences on the path
-            let fence = [.30, .65]
-            let state =  [true, true]
 
            let pnt = interpolate(t)
            let arr = pnt.split(",");
            let arg1 = parseInt(arr[0], 10)
            let arg2 = parseInt(arr[1], 10)
            let result = arg1/arg2
-           console.log("=========================")
 
            fence.forEach((e, i) =>{
              let calc = Math.abs(e-result)
-            console.log("marker is at " + result)
-            console.log("fence is at " + e)
-            console.log("Distance fence to marker = " + calc)
 
-             console.log("=========================")
+             if (calc < .0005) {
 
-             if (calc < .05) {
-               console.log("The state of fence is " + state[i])
                if (state[i] === true) {
                  state[i] = false
-                 console.log(">> Changed state of fence to " + state[i])
-                 console.log(i)
-                 stream(fence[i])                 
+                 stream(fence[i])
                }
              }
              // reset the state when the market has traveled beyond the 2nd geofence
