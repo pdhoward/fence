@@ -188,7 +188,6 @@ function d3Map(collection) {
         .attr("id", "sub")
         .attr("class", "subConnect");
 
-
     var bkstorePath = g.selectAll(".bkConnect")
         .data([bookstoredata])
         .enter()
@@ -289,8 +288,8 @@ function d3Map(collection) {
             .style("top", topLeft[1] - 50 + "px");
 
 
-        bkstorePath.attr("d", toBook)
-        subwayPath.attr("d", toSub)
+        //bkstorePath.attr("d", toBook)
+        //subwayPath.attr("d", toSub)
         linePath.attr("d", toLine)
 
         g.attr("transform", "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")");
@@ -330,12 +329,10 @@ function d3Map(collection) {
 
             var sub = subwayPath.node().getTotalLength();
             console.log('subwaypath length')
-            console.log(subwayPath.node())
             console.log(sub)
 
             var bk = bkstorePath.node().getTotalLength();
             console.log('bookpath length')
-            console.log(bkstorePath.node())
             console.log(bk)
 
 

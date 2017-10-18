@@ -19,6 +19,18 @@ path {
     stroke: red;
     stroke-opacity: 1;
 }
+subway {
+    fill: yellow;
+    stroke-width: 2px;
+    stroke: red;
+    stroke-opacity: 1;
+}
+book {
+    fill: yellow;
+    stroke-width: 2px;
+    stroke: red;
+    stroke-opacity: 1;
+}
 .travelMarker {
     fill: yellow;
     opacity: 0.75;
