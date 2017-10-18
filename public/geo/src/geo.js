@@ -340,6 +340,7 @@ function d3Map(collection) {
            let arg2 = parseInt(arr[1], 10)
            let result = arg1/arg2
 
+          // note that calc represents the tolerance level before triggering message
            fence.forEach((e, i) =>{
              let calc = Math.abs(e-result)
 
