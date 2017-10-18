@@ -288,8 +288,8 @@ function d3Map(collection) {
             .style("top", topLeft[1] - 50 + "px");
 
 
-        //bkstorePath.attr("d", toBook)
-        //subwayPath.attr("d", toSub)
+      //  bkstorePath.attr("d", toBook)
+      //  subwayPath.attr("d", toSub)
         linePath.attr("d", toLine)
 
         g.attr("transform", "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")");
@@ -331,6 +331,7 @@ function d3Map(collection) {
             console.log('subwaypath length')
             console.log(sub)
 
+          //  bkstorePath.attr("d", toBook)
             var bk = bkstorePath.node().getTotalLength();
             console.log('bookpath length')
             console.log(bk)
