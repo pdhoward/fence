@@ -324,8 +324,8 @@ function d3Map(collection) {
             //Move the marker to that point
             marker.attr("transform", "translate(" + p.x + "," + p.y + ")"); //move marker
 
-          console.log(d3.select("#way").attr("stroke-dasharray"))
-    
+            //console.log(d3.select("#way").attr("stroke-dasharray"))
+
            let pnt = interpolate(t)
            var arr = pnt.split(",");
            var arg1 = parseInt(arr[0], 10)
