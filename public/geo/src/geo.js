@@ -111,24 +111,7 @@ function d3Map(collection) {
         })
         .y(function(d) {
             return applyLatLngToLayer(d).y
-        });
-
-    var toSub = d3.svg.line()
-        .interpolate("linear")
-          .x(function(d) {
-              return applyLatLngToLayer(d).x
-          })
-          .y(function(d) {
-              return applyLatLngToLayer(d).y
-        });
-    var toBook = d3.svg.line()
-        .interpolate("linear")
-         .x(function(d) {
-              return applyLatLngToLayer(d).x
-            })
-         .y(function(d) {
-                return applyLatLngToLayer(d).y
-        });
+        });  
 
     // From now on we are essentially appending our features to the
     // group element. We're adding a class with the line name
@@ -176,24 +159,14 @@ function d3Map(collection) {
     // i am creating interim paths one ach length will be calcuated in linepath transition
     var originANDdestination = [featuresdata[0], featuresdata[8], featuresdata[12], featuresdata[17]]
 
+
+    // not used in this app but following functions create 4 arrays with the
+    // geojson data for each marker on the map
     let subwaydata = featuresdata.filter((item, i) => { if (i == 0) return item })
     let bookstoredata = featuresdata.filter((item, i) => { if (i < 9) return item })
     let botstoredata = featuresdata.filter((item, i) => { if (i < 13) return item })
     let officedata = featuresdata.filter((item, i) => { return item })
 
-    var subwayPath = g.selectAll(".subConnect")
-        .data([subwaydata])
-        .enter()
-        .append("path")
-        .attr("id", "sub")
-        .attr("class", "subConnect");
-
-    var bkstorePath = g.selectAll(".bkConnect")
-        .data([bookstoredata])
-        .enter()
-        .append("path")
-        .attr("id", "bk")
-        .attr("class", "bkConnect");
 
     /////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -287,9 +260,8 @@ function d3Map(collection) {
             .style("left", topLeft[0] - 50 + "px")
             .style("top", topLeft[1] - 50 + "px");
 
-
-      //  bkstorePath.attr("d", toBook)
-      //  subwayPath.attr("d", toSub)
+        // this method creates the path element with the svg line calibrated
+        // to the map scale --
         linePath.attr("d", toLine)
 
         g.attr("transform", "translate(" + (-topLeft[0] + 50) + "," + (-topLeft[1] + 50) + ")");
@@ -326,16 +298,6 @@ function d3Map(collection) {
         return function(t) {
             //total length of path (single value)
             var l = linePath.node().getTotalLength();
-
-            var sub = subwayPath.node().getTotalLength();
-            console.log('subwaypath length')
-            console.log(sub)
-
-          //  bkstorePath.attr("d", toBook)
-            var bk = bkstorePath.node().getTotalLength();
-            console.log('bookpath length')
-            console.log(bk)
-
 
 
             // this is creating a function called interpolate which takes
