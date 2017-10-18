@@ -337,11 +337,13 @@ function d3Map(collection) {
            let arg1 = parseInt(arr[0], 10)
            let arg2 = parseInt(arr[1], 10)
            let result = arg1/arg2
-           console.log("============")
+           console.log("=========================")
 
            fence.forEach((e, i) =>{
              let calc = Math.abs(e-result)
              console.log(calc)
+             console.log(e)
+             console.log(result)
 
              if (calc < .0005) {
                if (state[i]) {
@@ -353,7 +355,6 @@ function d3Map(collection) {
                }
              }
              if (i == 1) {
-               console.log("detected office")
                state[0] = true
                state[1] = true
              }
