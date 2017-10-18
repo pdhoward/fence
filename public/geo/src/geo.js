@@ -18,7 +18,7 @@ const headers = {
 // the mapbox api token needs to be retrieved before the remaining variables are set
 
 //used in geofence spoof in tweenDash function
-let fence = [.30, .65]
+let fence = [.45, .68]
 let state =  [true, true]
 /////////
 
