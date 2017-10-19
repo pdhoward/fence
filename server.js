@@ -25,6 +25,7 @@ const fenceRoute =      express.Router();
 // stream messages and publish to redis
 require('./routes/banter')(banterRoute);
 require('./routes/city')(cityRoute);
+require('./routes/fence')(fenceRoute);
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
@@ -36,7 +37,10 @@ app.use('/msg/city', cityRoute)
 
 // device being tracked as it navigates city streets
 // http message published when geofence is intersected by the device
+// serve html page
 app.use('/geo', express.static('public/geo'))
+// http message to main platform with geofence data
+app.use('/geo/fence', fenceRoute)
 
 // static location aware services
 app.use('/grid', express.static('public/grid'))
@@ -65,7 +69,7 @@ app.get('/', (req, res) => {
 
     /showpoints       ....   api to render the contents of the geojson db (used by /geo)
 
-    other APIs        ....   other api endpoints used by apps to retrieve config data    
+    other APIs        ....   other api endpoints used by apps to retrieve config data
 
 
     &copy2016 xio all rights reserved

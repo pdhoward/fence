@@ -13,7 +13,6 @@ const uuidv1 =        require('uuid/v1');
 
 let message = messages['geotag']
 
-// spoofing by publishing a text message periodically based on timer parameter
 module.exports = function(router) {
     router.use(bodyParser.json());
       //evaluate a new message
