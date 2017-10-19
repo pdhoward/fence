@@ -25,19 +25,18 @@ const fenceRoute =      express.Router();
 // stream messages and publish to redis
 require('./routes/banter')(banterRoute);
 require('./routes/city')(cityRoute);
-require('./routes/fence')(fenceRoute);
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
+// messages streamed to redis channel
 app.use('/msg/banter', banterRoute)
 app.use('/msg/city', cityRoute)
 
 // device being tracked as it navigates city streets
-// message published when geofence is intersected by the device
+// http message published when geofence is intersected by the device
 app.use('/geo', express.static('public/geo'))
-app.use('/geo/fence', fenceRoute)
 
 // static location aware services
 app.use('/grid', express.static('public/grid'))
