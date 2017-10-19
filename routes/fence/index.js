@@ -16,6 +16,8 @@ let message = messages['geotag']
 module.exports = function(router) {
     router.use(bodyParser.json());
       //evaluate a new message
+
+      // REFACTOR To Link to droid or publish on REDIS
       router.use(function(req, res, next) {
         console.log('GeoFence Detected in City - Send Message');
         console.log(req.body)
