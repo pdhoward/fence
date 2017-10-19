@@ -41,6 +41,7 @@ app.use('/geo', express.static('public/geo'))
 // static location aware services
 app.use('/grid', express.static('public/grid'))
 app.use('/matrix', express.static('public/matrix'))
+app.use('/quake', express.static('public/earthquake'))
 app.use('/usa', express.static('public/usa'))
 
 app.use(cors())
