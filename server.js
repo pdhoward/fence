@@ -61,6 +61,12 @@ app.get('/', (req, res) => {
     /grid             ....   grid visualization
     /matrix           ....   interactive matrix
     /usa              ....   usa visualization (not operational)
+    /quake            ....   illustrate mapping technology with USGA earthquake data
+
+    /showpoints       ....   api to render the contents of the geojson db (used by /geo)
+
+    other APIs        ....   other api endpoints used by apps to retrieve config data    
+
 
     &copy2016 xio all rights reserved
   </pre>
