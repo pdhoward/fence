@@ -57,6 +57,9 @@ app.get('/', (req, res) => {
 
     /geo              ....   http message with geofence intersected by city traveler
                              opens web page with map overlay as well
+    /grid             ....   grid visualization
+    /matrix           ....   interactive matrix
+    /usa              ....   usa visualization (not operational)
 
     &copy2016 xio all rights reserved
   </pre>
@@ -77,7 +80,7 @@ app.use((req, res, next) => {
     next()
   } else {
     res.status(403).send({
-      error: 'Please provide an Authorization header to identify yourself (can be whatever you want)'
+      Note: 'Request being process. Authorization header not detected'
     })
   }
 })
