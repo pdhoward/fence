@@ -50,9 +50,10 @@ app.use(cors())
 app.get('/', (req, res) => {
   const help = `
   <pre>
-    xio geofence test platform
+    xio test platform
 
-    Point your browser to the specific path to trigger a geofence use case
+    Point your browser to the specific path to stream test data
+    
 
     &copy2016 xio all rights reserved
   </pre>
