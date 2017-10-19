@@ -1,7 +1,7 @@
 
 ## Fence
 
-A set of functions for complex geofencing routines
+A set of functions for simple and complex data mocking routines, including geofencing
 
 The functions leverage turf.js, but add other feature rich capability for outdoor and indoor mapping routines and geo computations
 
@@ -15,13 +15,17 @@ Getting the app running on your local machine takes only a few steps:
 4 node server
 
 ## Usage
+
+Point your browser to root for a webpage with available APIs
+
 Point the browser at various end points to trigger data streaming
-see server.js for details
+
+see server.js as well for details
 
 An endpoint 'api/chaos' emits a continual stream of chatter to test 'interactions' with microservices (bots) on the microplex platform
 
 This same endpoint can be modified to emulate traffic, shipments or other objects that are being tracked. A message structure with geolocations and appropriate identifying info would be
-published. 
+published.
 
 ## License and Use
  [LICENSE](LICENSE.txt).

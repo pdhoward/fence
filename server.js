@@ -53,7 +53,11 @@ app.get('/', (req, res) => {
     xio test platform
 
     Point your browser to the specific path to stream test data
-    
+    /msg/banter       ....   stream banter to redis banter channel
+    /msg/city         ....   stream city geo data to redis city channe;
+
+    /geo              ....   http message with geofence intersected by city traveler
+                             opens web page with map overlay as well
 
     &copy2016 xio all rights reserved
   </pre>
