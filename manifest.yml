@@ -1,0 +1,9 @@
+---
+applications:
+- name: fence
+  memory: 512M
+  instances: 1
+  host: fence
+  domain: mybluemix.net
+  path: .
+  command: npm start

@@ -1,9 +1,11 @@
 {
   "name": "fence",
   "version": "1.0.0",
-  "description": "geofence functions for the conversational economy",
+  "description": "test functions for the conversational economy",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "bluemix": "node server.js"
+  },
   "keywords": [
     "messaging",
     "node",
@@ -13,6 +15,12 @@
     "geospatial"
   ],
   "author": "xio",
+  "contributors": [
+    {
+      "name": "Patrick Howard",
+      "email": "patrick.howard@xiollc.com"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.1",
